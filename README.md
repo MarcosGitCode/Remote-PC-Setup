@@ -20,10 +20,27 @@ A solução foi desenhada para reaproveitar hardware legado que consuma pouca en
 3. **Execução:** Um alias em Bash dispara o utilitário `wakeonlan` com o endereço físico (MAC Address) do computador destino.
 4. **Acionamento:** O pacote mágico é transmitido via broadcast na interface de rede local, acordando o hardware destino através da placa-mãe.
 
+## 🔒 O Papel do Tailscale na Arquitetura
+O principal desafio em conexões residenciais modernas é o **CGNAT (Carrier-Grade NAT)**, que impede o redirecionamento de portas tradicional (Port Forwarding) e oculta o IP público real da residência. 
+
+O Tailscale resolve essa limitação atuando como uma camada de rede virtual privada (VPN Mesh):
+* **Bypass de CGNAT:** Ele estabelece conexões diretas ponto a ponto (Peer-to-Peer) entre o cliente e o servidor de borda, utilizando técnicas de NAT Traversal.
+* **Segurança Baseada em WireGuard:** Todo o tráfego que passa pelo túnel é criptografado nativamente utilizando o protocolo WireGuard, garantindo que a sessão SSH fique invisível para a internet pública.
+* **Roteamento Estático Simplificado:** Cada dispositivo recebe um endereço IP fixo dentro do range da rede virtual, eliminando a necessidade de configurar serviços complexos de DNS Dinâmico (DDNS).
+
 ## ⚙️ Como Replicar
 
-1. Instale o ambiente de terminal (Termux no Android ou terminal nativo no Linux desktop).
-2. Clone este repositório:
+### Passo 1: Preparação do Computador Destino (PC que será ligado)
+1. Acesse a **BIOS/UEFI** do computador que você deseja ligar remotamente.
+2. Ative a opção **Wake-on-LAN (WoL)** (geralmente encontrada em *Power Management* ou *Advanced / Onboard Ports* como "Wake on Magic Packet", "PCIE Devices Power On" ou similar).
+3. No sistema operacional do computador, vá até as propriedades da placa de rede de internet (via cabo) e certifique-se de que a opção "Permitir que este dispositivo acorde o computador" esteja ativa.
+4. Anote o **Endereço MAC** da placa de rede com fio do computador.
+
+### Passo 2: Configuração do Servidor de Borda (Android/Termux ou PC Linux Velho)
+1. Instale o ambiente de terminal (App **Termux** no Android ou acesse o terminal nativo da sua distribuição Linux legada).
+2. Certifique-se de que o dispositivo servidor esteja conectado na **mesma rede local (Wi-Fi ou cabo)** que o computador destino.
+3. No terminal do servidor, clone este repositório e acesse a pasta:
    ```bash
-   git clone https://github.com/MarcosGitCode/Remote-PC-Setup
+   git clone [https://github.com/MarcosGitCode/Remote-PC-Setup](https://github.com/MarcosGitCode/Remote-PC-Setup)
+   cd Remote-PC-Setup
 
