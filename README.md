@@ -4,7 +4,7 @@ Este projeto implementa uma solução de servidor de borda residencial de baixo 
 
 ## 💻 Hardware Suportado
 A solução foi desenhada para reaproveitar hardware legado que consuma pouca energia rodando 24/7:
-* **Ambiente Mobile:** Dispositivos Android antigos dedicados (através do emulador de terminal Termux).
+* **Ambiente Mobile:** Dispositivos Android antigos dedicados(através do emulador de terminal Termux).
 * **Ambiente Desktop:** Computadores ou notebooks obsoletos configurados com uma distribuição Linux (Debian, Ubuntu Server, Fedora, etc.).
 
 ## 🛠️ Tecnologias e Conceitos Aplicados
